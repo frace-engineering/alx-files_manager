@@ -9,25 +9,23 @@ class DBClient {
     this.client = new MongoClient(this.url, { useUnifiedTopology: true });
   }
 
-  async isAlive() {
-    const client = await this.client.connect();
-    return client;
+  isAlive() {
+    const isConnected = this.client.connect();
+    return !!isConnected;
   }
 
   async nbUsers() {
-    const client = await this.client.connect();
-    const db = client.db(this.dbname);
+    const db = this.client.db(this.dbname);
     const collection = db.collection('users');
-    const count = collection.find().count();
-    return count;
+    const usersCount = await collection.find().count();
+    return usersCount;
   }
 
   async nbFiles() {
-    const client = await this.client.connect();
-    const db = client.db(this.dbname);
+    const db = this.client.db(this.dbname);
     const collection = db.collection('files');
-    const count = collection.find().count();
-    return count;
+    const filesCount = await collection.find().count();
+    return filesCount;
   }
 }
 const dbClient = new DBClient();
