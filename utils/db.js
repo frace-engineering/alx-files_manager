@@ -9,40 +9,27 @@ class DBClient {
     this.client = new MongoClient(this.url, { useUnifiedTopology: true });
   }
 
-
-  async isAlive() {
-    try {
-      const client = await this.client.connect();
-      return client;
-    } catch (error) {
-      throw error;
-    }
+  isAlive() {
+    const isConnected =  this.client.connect();
+    return !!isConnected;
   }
 
   async nbUsers() {
-    try {
-      const client = await this.client.connect();
-      const db = client.db(this.dbname);
-      const collection = db.collection('users');
-      const count = collection.find().count();
-      return count;
-    } catch (error) {
-      throw error;
-    }
+    //const client = this.client.connect();
+    const db = this.client.db(this.dbname);
+    const collection = db.collection('users');
+    const usersCount = await collection.find().count();
+    return usersCount;
   }
 
   async nbFiles() {
-    try {
-      const client = await this.client.connect();
-      const db = client.db(this.dbname);
-      const collection = db.collection('files');
-      const count = collection.find().count();
-      return count;
-    } catch (error) {
-      throw error;
-    }
+    //const client = await this.client.connect();
+    const db = this.client.db(this.dbname);
+    const collection = db.collection('files');
+    const filesCount = await collection.find().count();
+    return filesCount;
   }
 
 }
 const dbClient = new DBClient();
-export default dbClient; 
+export default dbClient;
