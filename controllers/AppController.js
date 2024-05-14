@@ -1,5 +1,5 @@
-import dbClient from '../utils/db.js';
-import redisClient from'../utils/redis.js';
+import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
 
 const AppController = {
   async getStatus(req, res) {
@@ -22,6 +22,6 @@ const AppController = {
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  }
-}
+  },
+};
 export default AppController;

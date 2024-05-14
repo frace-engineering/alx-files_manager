@@ -10,12 +10,11 @@ class DBClient {
   }
 
   isAlive() {
-    const isConnected =  this.client.connect();
+    const isConnected = this.client.connect();
     return !!isConnected;
   }
 
   async nbUsers() {
-    //const client = this.client.connect();
     const db = this.client.db(this.dbname);
     const collection = db.collection('users');
     const usersCount = await collection.find().count();
@@ -23,13 +22,11 @@ class DBClient {
   }
 
   async nbFiles() {
-    //const client = await this.client.connect();
     const db = this.client.db(this.dbname);
     const collection = db.collection('files');
     const filesCount = await collection.find().count();
     return filesCount;
   }
-
 }
 const dbClient = new DBClient();
 export default dbClient;
