@@ -10,8 +10,12 @@ class DBClient {
   }
 
   isAlive() {
-    const isConnected = this.client.connect();
-    return !!isConnected;
+    const connected = this.client.connect();
+    if (connected) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async nbUsers() {
@@ -19,6 +23,8 @@ class DBClient {
     const collection = db.collection('users');
     const usersCount = await collection.find().count();
     return usersCount;
+  } catch (error) {
+    throw error;
   }
 
   async nbFiles() {
@@ -26,6 +32,8 @@ class DBClient {
     const collection = db.collection('files');
     const filesCount = await collection.find().count();
     return filesCount;
+  } catch (error) {
+    throw error;
   }
 }
 const dbClient = new DBClient();
